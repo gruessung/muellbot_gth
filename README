@@ -1,0 +1,36 @@
+## muellbot_gth
+
+Dies ist ein Datensammler für die Termine der Abfallwirtschaft Gotha.
+
+#Installation
+
+1. Kopiere die config_sample.php nach config.php
+
+2. Lege die Datenbankstruktur an:
+
+```
+                CREATE TABLE `termine` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `termin` int(15) NOT NULL,
+                  `ort` int(2) NOT NULL,
+                  `typ` varchar(5) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=21782 DEFAULT CHARSET=utf8;
+```
+
+3. Starte MuellCron.php, hier werden alle Daten gesammelt und in die DB geschrieben.
+
+
+#API Referenz
+
+/ - nothing :)
+
+/villages - Gibt alle Orte zurück
+
+/[id_ort] - Gibt alle gefundenen Termine des Ortes zurück
+
+/[id_ort]/tommorow - Gibt alle morgigen Termine des Ortes zurück
+
+/[id_ort]/nextweek - Gibt alle Termine der nächsten Woche des Ortes zurück
+
+/[id_ort]/[typ] - Gibt alle Termine des Tonnentypes [typ] des Ortes zurück
