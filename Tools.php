@@ -311,7 +311,7 @@ class Tools
         'R11' => 'Hausmüll',
         'B2' => 'Biomüll',
         'G14' => 'Gelber Sack',
-        'P2' => 'Papier'
+       /* 'P2' => 'Papier'*/
     ];
     
     public static function getOrtText($iOrt) {
