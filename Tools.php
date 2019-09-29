@@ -308,9 +308,9 @@ class Tools
     ];
     
     static $aTonnentyp = [
-        'R11' => 'Hausmüll',
-        'B2' => 'Biomüll',
-        'G14' => 'Gelber Sack',
+        0 => 'Hausmüll',
+        1 => 'Biomüll',
+        2 => 'Gelber Sack',
        /* 'P2' => 'Papier'*/
     ];
     

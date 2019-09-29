@@ -93,25 +93,43 @@ class MuellCron
         $oDOM->loadHTML(file_get_contents(self::BASE_URL . $iOrt));
         libxml_clear_errors();
         
+        
+        
         $aTables = $oDOM->getElementsByTagName('table');
         $oTable  = $aTables->item(2);
         
         $aZeilen       = $oTable->getElementsByTagName('tr');
         $aTermine      = [];
         $sAktuellerTyp = '';
+        /** @var int $iAktuelleStyleClassNumber */
+        $iAktuelleStyleClassNumber = 0; //wird gebraucht um falschen HTML Syntax auszutricksen
         foreach ($aZeilen as $oZeile) {
             $aTDs = $oZeile->getElementsByTagName('td');
             
             //Typ ermitteln
             $sContentTyp = trim(str_replace('&nbsp;', '', $aTDs[0]->textContent));
-            echo $sContentTyp . PHP_EOL;
+            #echo $sContentTyp . PHP_EOL;
             foreach (Tools::$aTonnentyp as $sIndex => $sTyp) {
-                if (strpos($sContentTyp, $sIndex) !== false) {
+                if (strpos($sContentTyp, $sTyp) !== false) {
+                    #echo "Neuer Typ: ".$sIndex.' - '.$sTyp.PHP_EOL;
                     $sAktuellerTyp = $sIndex;
                 }
             }
-            
+    
+            /** @var DOMNode $oTD */
             foreach ($aTDs as $oTD) {
+    
+                /**
+                 * Das HTML der Quellseite ist kaputt (es fehlen tr's). Daher prüfe ich auf die Styleclass ab, da sich diese
+                 * mit jedem Typ erhöht (ep_1, ep_2, ...). Der Typ mit dem fehlenden TR hat eine niedrige ep_ Nummer und
+                 * ist somit invalide.
+                 */
+                $iStyleClassNumber = str_replace('ep_', '', $oTD->attributes->getNamedItem('class')->nodeValue);
+                if ($iStyleClassNumber < $iAktuelleStyleClassNumber) {
+                    continue;
+                }
+                $iAktuelleStyleClassNumber = $iStyleClassNumber;
+                
                 $sDatum     = $oTD->textContent . date('Y');
                 $iTimestamp = strtotime($sDatum);
                 if ($iTimestamp < strtotime('01.01.' . date('Y')) || $sDatum == date('Y')) {
@@ -122,7 +140,7 @@ class MuellCron
                     continue;
                 }
                 
-                # echo $sDatum.'.'.date('Y').PHP_EOL;
+                #echo $sDatum.PHP_EOL;
                 $aTermine[$sAktuellerTyp][] = $iTimestamp;
             }
         }
