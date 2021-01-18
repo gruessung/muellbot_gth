@@ -27,6 +27,7 @@ $oApp->any('/', \Muellbot\MuellApi::class.':help');
 $oApp->get('/villages', \Muellbot\MuellApi::class.':getOrte');
 $oApp->get('/{id_ort}/tommorow', \Muellbot\MuellApi::class.':tommorow');
 $oApp->get('/{id_ort}/nextweek', \Muellbot\MuellApi::class.':nextweek');
+$oApp->get('/{id_ort}/nexttwoweeks', \Muellbot\MuellApi::class.':nexttwoweeks');
 $oApp->get('/{id_ort}/{typ}', \Muellbot\MuellApi::class.':getByOrt');
 $oApp->get('/{id_ort}/{typ}/{min_timestamp}', \Muellbot\MuellApi::class.':getByOrt');
 $oApp->get('/{id_ort}', \Muellbot\MuellApi::class.':getByOrt');

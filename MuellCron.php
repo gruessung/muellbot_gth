@@ -15,6 +15,8 @@ class MuellCron
     private $bDebug = false;
     private $sTable = 'termine';
 
+    private $aDataToInsert = [];
+
 
     public function __construct($bDebug = false)
     {
@@ -70,20 +72,28 @@ class MuellCron
                     $events = $this->loadIcs($filename, $sKey);
                     Tools::log('Habe '.count($events).' Events gefunden');
                     foreach($events as $i => $event) {
-                        #Tools::log('Speichere '. ($i+1).'/'.count($events));
-                        $this->saveDateInDatabase($event);
+                        $this->aDataToInsert[] = [
+                            'termin' => $event->timestamp,
+                            'ort' => $event->streetKey,
+                            'typ' => $event->type
+                        ];
                     }
                 } catch (Exception $ex) {
                     Tools::log($ex->getMessage(), Tools::ERROR);
                 }
             }
         }
+
+        Tools::log('Daten speichern...');
+        $this->saveDateInDatabase();
     }
 
     private function downloadIcs($sKey)
     {
         $filename = './cache/' . $sKey . '.ics';
-        file_put_contents($filename, file_get_contents('https://awido.cubefour.de/Customer/gotha/KalenderICS.aspx?oid=' . $sKey . '&jahr=2021&fraktionen=1,2,3,4&reminder=-1.17:00'));
+        if (!file_exists($filename)) {
+            file_put_contents($filename, file_get_contents('https://awido.cubefour.de/Customer/gotha/KalenderICS.aspx?oid=' . $sKey . '&jahr=2021&fraktionen=1,2,3,4&reminder=-1.17:00'));
+        }
         return $filename;
     }
 
@@ -120,18 +130,14 @@ class MuellCron
             }
         }
 
-        $event->timestamp = $aEvent->dtend_array[2];
+        $event->timestamp = $aEvent->dtstart_array[2];
         $event->streetKey = $sKey;
 
         return $event;
     }
 
-    private function saveDateInDatabase($event) {
-        $this->oDB->insert($this->sTable, [
-            'termin' => $event->timestamp,
-            'ort' => $event->streetKey,
-            'typ' => $event->type
-        ]);
+    private function saveDateInDatabase() {
+        $this->oDB->insert($this->sTable, $this->aDataToInsert);
     }
 
     private function ladeRegionen()
