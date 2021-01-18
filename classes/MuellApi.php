@@ -16,9 +16,9 @@ class MuellApi extends BasicObject
     {
         $iOrt = $args['id_ort'];
         
-        if (!is_numeric($iOrt)) {
-            return $this->returnJSON($response, ['msg' => 'id_ort have to be numeric'], 400, BasicObject::HTTP_400);
-        }
+        #if (!is_numeric($iOrt)) {
+        #    return $this->returnJSON($response, ['msg' => 'id_ort have to be numeric'], 400, BasicObject::HTTP_400);
+        #}
         
         $aTermine = [];
         $aWhere   = ['ort' => $iOrt];
@@ -45,9 +45,9 @@ class MuellApi extends BasicObject
     {
         $iOrt = $args['id_ort'];
         
-        if (!is_numeric($iOrt)) {
-            return $this->returnJSON($response, ['msg' => 'id_ort have to be numeric'], 400, BasicObject::HTTP_400);
-        }
+        #if (!is_numeric($iOrt)) {
+        #    return $this->returnJSON($response, ['msg' => 'id_ort have to be numeric'], 400, BasicObject::HTTP_400);
+        #}
         
         $sDatum = date('d.m.Y', time() + (60 * 60 * 24));
         
@@ -83,6 +83,7 @@ class MuellApi extends BasicObject
         $aWhere   = ['ort'        => $iOrt,
                      'termin[>=]' => $oMonday->getTimestamp(),
                      'termin[<=]' => $oSunday->getTimestamp(),
+
                      'ORDER' => [
                          'termin' => 'ASC'
                      ]
@@ -99,6 +100,6 @@ class MuellApi extends BasicObject
     }
     
     function getOrte(Request $request, Response $response, array $args) {
-        $this->returnJSON($response, \Tools::$aOrte);
+        $this->returnJSON($response, json_decode(file_get_contents('orte.json'), true));
     }
 }

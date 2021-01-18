@@ -12,7 +12,7 @@ Dies ist ein Datensammler für die Termine der Abfallwirtschaft Gotha.
                 CREATE TABLE `termine` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `termin` int(15) NOT NULL,
-                  `ort` int(2) NOT NULL,
+                  `ort` varchar(255) NOT NULL,
                   `typ` varchar(5) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=MyISAM AUTO_INCREMENT=21782 DEFAULT CHARSET=utf8;
