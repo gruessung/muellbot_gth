@@ -85,6 +85,7 @@ class MuellCron
         }
 
         Tools::log('Daten speichern...');
+        $this->oDB->delete($this->sTable);
         $this->saveDateInDatabase();
     }
 
