@@ -1,0 +1,96 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "MüllAPI Gotha",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://muell.gth.opendata.grue.xyz"
+    }
+  ],
+  "components": {
+    "parameters": {
+      "village_id": {
+        "name": "village_id",
+        "in": "query",
+        "required": true,
+        "description": "ID des Ortes / Ortsteiles"
+      },
+      "typ": {
+        "name": "typ",
+        "in": "query",
+        "required": true,
+        "description": "ID des Tonnentypes"
+      }
+    }
+  },
+  "paths": {
+    "/villages": {
+      "get": {
+        "description": "Gibt alle Orte bzw. deren Ortsteile mit den dazugehörigen IDs zurück.",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{village_id}": {
+      "get": {
+        "description": "Gibt zum gewählten Ortsteil alle Termine aus der Datenbank zurück",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "Zeigt nützliche Informationen zur API an, u.a. das Mapping für die Tonnentypen",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{village_id}/tommorow": {
+      "get": {
+        "description": "Gibt vom gewählten Ort alle Termine für den kommenden Tag zurück.",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{village_id}/nextweek": {
+      "get": {
+        "description": "Gibt vom gewählten Ort alle Termine für die kommende Woche zurück.",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/{village_id}/{typ}": {
+      "get": {
+        "description": "Gibt vom gewählten Ort alle Termine zum gewählten Tonnentyp zurück.",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
