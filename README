@@ -14,6 +14,7 @@ Dies ist ein Datensammler für die Termine der Abfallwirtschaft Gotha.
                   `termin` int(15) NOT NULL,
                   `ort` varchar(255) NOT NULL,
                   `typ` varchar(5) NOT NULL,
+                  `jahr` varchar(4) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=MyISAM AUTO_INCREMENT=21782 DEFAULT CHARSET=utf8;
 ```
