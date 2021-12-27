@@ -80,7 +80,7 @@ class MuellCron
                         ];
                     }
 
-                } catch (Exception $ex) {
+                    } catch (Exception $ex) {
                     Tools::log($ex->getMessage(), Tools::ERROR);
                 }
             }
