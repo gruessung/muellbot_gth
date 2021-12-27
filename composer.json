@@ -13,7 +13,7 @@
   "require": {
     "slim/slim": "^3.0",
     "catfan/medoo": "^1.5",
-    "slim/csrf": "^0.8.2",
+    "slim/csrf": "^1.2.1",
     "johngrogg/ics-parser": "^2"
   },
   "autoload": {
