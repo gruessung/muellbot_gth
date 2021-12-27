@@ -75,9 +75,11 @@ class MuellCron
                         $this->aDataToInsert[] = [
                             'termin' => $event->timestamp,
                             'ort' => $event->streetKey,
-                            'typ' => $event->type
+                            'typ' => $event->type,
+                            'jahr' => JAHR
                         ];
                     }
+
                 } catch (Exception $ex) {
                     Tools::log($ex->getMessage(), Tools::ERROR);
                 }
@@ -85,15 +87,15 @@ class MuellCron
         }
 
         Tools::log('Daten speichern...');
-        $this->oDB->delete($this->sTable);
+        $this->oDB->delete($this->sTable, ['jahr' => JAHR]);
         $this->saveDateInDatabase();
     }
 
     private function downloadIcs($sKey)
     {
         $filename = './cache/' . $sKey . '.ics';
-        if (!file_exists($filename)) {
-            file_put_contents($filename, file_get_contents('https://awido.cubefour.de/Customer/gotha/KalenderICS.aspx?oid=' . $sKey . '&jahr=2021&fraktionen=1,2,3,4&reminder=-1.17:00'));
+        if (!file_exists($filename) || !USE_CACHE) {
+            file_put_contents($filename, file_get_contents('https://awido.cubefour.de/Customer/gotha/KalenderICS.aspx?oid=' . $sKey . '&jahr='.JAHR.'&fraktionen=1,2,3,4&reminder=-1.17:00'));
         }
         return $filename;
     }
