@@ -14,7 +14,7 @@
     "slim/slim": "^3.0",
     "catfan/medoo": "^1.5",
     "slim/csrf": "^0.8.2",
-    "johngrogg/ics-parser": "^2"
+    "johngrogg/ics-parser": "^3"
   },
   "autoload": {
     "psr-4": {
