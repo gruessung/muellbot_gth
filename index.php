@@ -13,12 +13,12 @@ $oContainer = new \Slim\Container([
     ],
     'db' => function() {
         return new \Medoo\Medoo([
-                                'database_type' => DB_TYPE,
-                                'database_name' => DB_DATABASE,
-                                'server' => DB_HOST,
-                                'username' => DB_USER,
-                                'password' => DB_PASS
-                                ]);
+            'database_type' => DB_TYPE,
+            'database_name' => DB_DATABASE,
+            'server' => DB_HOST,
+            'username' => DB_USER,
+            'password' => DB_PASS
+        ]);
     }
 ]);
 
@@ -27,6 +27,8 @@ $oApp->any('/', \Muellbot\MuellApi::class.':help');
 $oApp->get('/villages', \Muellbot\MuellApi::class.':getOrte');
 $oApp->get('/{id_ort}/tommorow', \Muellbot\MuellApi::class.':tommorow');
 $oApp->get('/{id_ort}/nextweek', \Muellbot\MuellApi::class.':nextweek');
+$oApp->get('/{id_ort}/next', \Muellbot\MuellApi::class.':next');
+$oApp->get('/{id_ort}/next/{id_typ}', \Muellbot\MuellApi::class.':next');
 $oApp->get('/{id_ort}/nexttwoweeks', \Muellbot\MuellApi::class.':nexttwoweeks');
 $oApp->get('/{id_ort}/{typ}', \Muellbot\MuellApi::class.':getByOrt');
 $oApp->get('/{id_ort}/{typ}/{min_timestamp}', \Muellbot\MuellApi::class.':getByOrt');

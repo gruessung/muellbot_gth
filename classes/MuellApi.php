@@ -103,6 +103,56 @@ class MuellApi extends BasicObject
 
     }
 
+
+    function next(Request $request, Response $response, array $args)
+    {
+        $iOrt = $args['id_ort'];
+
+        $iTyp = "100";
+        if (isset($args['id_typ'])) {
+            $iTyp = $args['id_typ'];
+        }
+        $now = new \DateTime();
+        $now->modify('now');
+
+
+        if ($iTyp == "100") {
+            $this->help($request, $response, []);
+            return;
+        }
+
+        $aTermine = [];
+
+        $aWhere = ['ort' => $iOrt,
+            'termin[>=]' => $now->getTimestamp(),
+            'typ' => $iTyp,
+
+            'ORDER' => [
+                'termin' => 'ASC'
+            ],
+
+            'LIMIT' => 1
+
+        ];
+
+
+        $aData = $this->oDB->select('termine', '*', $aWhere);
+
+
+        foreach ($aData as $e) {
+            if (count($aTermine[$e['typ']]) > 0) continue;
+            if ($iTyp != "100" && $iTyp != $e['typ']) continue;
+            if ($iTyp != "100") {
+                $aTermine = ['timestamp' => $e['termin'], 'date' => date('d.m.Y', $e['termin']), 'day' => date('l', $e['termin'])];
+            } else {
+                $aTermine[$e['typ']] = ['timestamp' => $e['termin'], 'date' => date('d.m.Y', $e['termin']), 'day' => date('l', $e['termin'])];
+            }
+        }
+
+        return $this->returnJSON($response, $aTermine);
+
+    }
+
     function nexttwoweeks(Request $request, Response $response, array $args)
     {
         $iOrt = $args['id_ort'];

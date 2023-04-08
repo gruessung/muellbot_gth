@@ -91,6 +91,17 @@
           }
         }
       }
+    },
+    "/{village_id}/next/{typ}": {
+      "get": {
+        "description": "Gibt vom gewählten Ort den nächsten Abholtermin zum gewählten Tonnentyp zurück.",
+        "parameters": [ ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }
