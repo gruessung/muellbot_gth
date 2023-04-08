@@ -34,4 +34,6 @@ Dies ist ein Datensammler für die Termine der Abfallwirtschaft Gotha.
 
 /[id_ort]/nextweek - Gibt alle Termine der nächsten Woche des Ortes zurück
 
-/[id_ort]/[typ] - Gibt alle Termine des Tonnentypes [typ] des Ortes zurück 
+/[id_ort]/[typ] - Gibt alle Termine des Tonnentypes [typ] des Ortes zurück
+
+//[id_ort]/next/[typ] - Gibt den kommenden Abholtermin für [typ] des Ortes [id_ort] zurück
